@@ -18,8 +18,6 @@ void sendStringMessage(String outgoing)
     LoRa.print(outgoing);          // add payload
     LoRa.endPacket();              // finish packet and send it
 
-    delay(100);
-
     LoRa.receive();
 
     // Serial.println("Transmitted message");
@@ -80,16 +78,16 @@ void loop()
     if (SerialBT.available())
     {
         DynamicJsonDocument doc(1024);
-        doc["type"] = "message";
-        doc["message"] = SerialBT.readString();
+        doc["type"] = "command";
+        doc["content"] = SerialBT.readString();
         sendMessage(doc);
     }
 
     if (Serial.available())
     {
         DynamicJsonDocument doc(1024);
-        doc["type"] = "message";
-        doc["message"] = Serial.readString();
+        doc["type"] = "command";
+        doc["content"] = Serial.readString();
         sendMessage(doc);
     }
 
